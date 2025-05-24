@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>HACKED</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: black;
+      color: #0F0;
+      font-family: 'Courier New', Courier, monospace;
+      overflow: hidden;
+      height: 100%;
+    }
+    h1 {
+      position: absolute;
+      top: 10px;
+      left: 20px;
+      font-size: 2em;
+      animation: blink 1s infinite;
+      z-index: 2;
+    }
+    #console {
+      position: absolute;
+      top: 60px;
+      left: 20px;
+      width: 90%;
+      max-height: 90vh;
+      overflow-y: auto;
+      white-space: pre;
+      font-size: 0.9em;
+      z-index: 2;
+    }
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 1;
+    }
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>[!] SISTEMA INFECTADO - ACCESO REMOTO ACTIVADO</h1>
+  <div id="console"></div>
+  <canvas id="matrix"></canvas>
+
+  <!-- Sonidos -->
+  <audio id="beep" src="https://www.soundjay.com/buttons/sounds/beep-07.mp3 " preload="auto"></audio>
+  <audio id="typing" src="https://freesound.org/data/previews/41/41852_3952-lq.mp3 " preload="auto"></audio>
+
+  <script>
+    // Activar pantalla completa
+    function goFullScreen() {
+      if (document.documentElement.requestFullscreen) {
+        document.documentElement.requestFullscreen();
+      } else if (document.documentElement.mozRequestFullScreen) {
+        document.documentElement.mozRequestFullScreen();
+      } else if (document.documentElement.webkitRequestFullscreen) {
+        document.documentElement.webkitRequestFullscreen();
+      }
+    }
+
+    window.onload = goFullScreen;
+
+    // Efecto Matrix
+    const canvas = document.getElementById('matrix');
+    const ctx = canvas.getContext('2d');
+
+    canvas.height = window.innerHeight;
+    canvas.width = window.innerWidth;
+
+    const letters = 'アァイィウヴエェオカガキギクグケゲコゴサザシジスズセゼソゾタダチッヂヅテデトドナニヌネノハバパヒビピフブプヘベペホボポマミムメモヤユヨラリルレロワヲンABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    const fontSize = 14;
+    const columns = canvas.width / fontSize;
+    const drops = Array(Math.floor(columns)).fill(1);
+
+    function drawMatrix() {
+      ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = '#0F0';
+      ctx.font = fontSize + 'px monospace';
+
+      for (let i = 0; i < drops.length; i++) {
+        const text = letters.charAt(Math.floor(Math.random() * letters.length));
+        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+        if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+          drops[i] = 0;
+        }
+        drops[i]++;
+      }
+    }
+
+    setInterval(drawMatrix, 50);
+
+    // Simular escritura
+    const lines = [
+      "[INFO] Iniciando protocolo de infiltración...",
+      "[ALERT] Acceso no autorizado detectado.",
+      "[SCAN] Analizando sistema del dispositivo: Android QKQ1.200826.002",
+      "[+] Número de serie del dispositivo: A12B45C78D",
+      "[+] Correo electrónico principal: victim@example.com",
+      "[+] Contraseña almacenada: ***********",
+      "[+] Contacto más reciente: Papá",
+      "[+] Última ubicación GPS: Calle Falsa 123",
+      "[+] Historial de navegación sensible recuperado.",
+      "[!] Cámara frontal activada...",
+      "[!] Micrófono accedido temporalmente...",
+      "[ERROR] Datos sensibles comprometidos.",
+      "[HACK] Subiendo información al servidor remoto...",
+      "[SUCCESS] Operación completada.",
+      "[CLOSING] Conexión cerrada."
+    ];
+
+    const consoleEl = document.getElementById('console');
+    const beepSound = document.getElementById('beep');
+    const typingSound = document.getElementById('typing');
+
+    function typeLine(line, callback) {
+      let i = 0;
+      const interval = setInterval(() => {
+        if (i <= line.length) {
+          consoleEl.innerHTML += line[i++] + "\n";
+          consoleEl.scrollTop = consoleEl.scrollHeight;
+          if (line.includes("[ERROR]") || line.includes("[HACK]")) {
+            beepSound.currentTime = 0;
+            beepSound.play();
+          } else {
+            typingSound.currentTime = 0;
+            typingSound.play();
+          }
+        } else {
+          clearInterval(interval);
+          setTimeout(callback, 500);
+        }
+      }, 40);
+    }
+
+    function runLines(i) {
+      if (i < lines.length) {
+        typeLine(lines[i], () => runLines(i + 1));
+      }
+    }
+
+    runLines(0);
+  </script>
+</body>
+</html>
